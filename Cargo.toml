@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "client/hyper_client",
+    "client/reqwest_client",
+    "server"
+]
