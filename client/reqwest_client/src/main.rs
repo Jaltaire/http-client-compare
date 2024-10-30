@@ -39,9 +39,11 @@ impl ClientWrapper {
                 .send()
                 .await;
             match res {
-                Ok(response) => {
+                Ok(mut response) => {
                     let status = response.status();
-                    let _body = response.bytes().await?;
+                    while response.chunk().await?.is_some() {
+                        // no-op
+                    }
                     println!(
                         "scraped URL (status {}) in {:?}: {}",
                         status,
