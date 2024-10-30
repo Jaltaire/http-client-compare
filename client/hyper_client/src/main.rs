@@ -1,19 +1,19 @@
-use std::error::Error;
-use std::io::Read;
-use std::sync::Arc;
-use futures::future::join_all;
-use std::time::Duration;
 use flate2::read::GzDecoder;
+use futures::future::join_all;
 use http_body_util::{BodyExt, Empty};
 use hyper::body::Bytes;
 use hyper::{header, Request};
 use hyper_rustls::{HttpsConnector, HttpsConnectorBuilder};
-use hyper_util::client::legacy::Client;
 use hyper_util::client::legacy::connect::HttpConnector;
+use hyper_util::client::legacy::Client;
 use hyper_util::rt::TokioExecutor;
 use rustls::client::danger::{HandshakeSignatureValid, ServerCertVerified, ServerCertVerifier};
-use rustls::{ClientConfig, DigitallySignedStruct, SignatureScheme};
 use rustls::pki_types::{CertificateDer, ServerName, UnixTime};
+use rustls::{ClientConfig, DigitallySignedStruct, SignatureScheme};
+use std::error::Error;
+use std::io::Read;
+use std::sync::Arc;
+use std::time::Duration;
 use tokio::sync::Semaphore;
 use tokio::time::Instant;
 
@@ -148,9 +148,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         let url = format!("https://127.0.0.1:3000/{}", i);
         let handle = tokio::spawn({
             let client_wrapper = client_wrapper.clone();
-            async move {
-                client_wrapper.get(url).await
-            }
+            async move { client_wrapper.get(url).await }
         });
         handles.push(handle);
     }

@@ -1,8 +1,8 @@
+use futures::future::join_all;
+use reqwest::{header, Client};
 use std::error::Error;
 use std::sync::Arc;
 use std::time::Duration;
-use futures::future::join_all;
-use reqwest::{header, Client};
 use tokio::sync::Semaphore;
 use tokio::time::Instant;
 
@@ -69,9 +69,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         let url = format!("https://127.0.0.1:3000/{}", i);
         let handle = tokio::spawn({
             let client_wrapper = client_wrapper.clone();
-            async move {
-                client_wrapper.get(url).await
-            }
+            async move { client_wrapper.get(url).await }
         });
         handles.push(handle);
     }
