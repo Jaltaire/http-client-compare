@@ -53,7 +53,6 @@ func (cw *ClientWrapper) Get(url string) error {
 		}
 
 		req.Header.Set("Accept", "*/*")
-		req.Header.Set("Accept-Encoding", "gzip")
 		req.Header.Set("User-Agent", "go_client")
 
 		resp, err := cw.client.Do(req)
