@@ -62,12 +62,13 @@ impl ClientWrapper {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    let n = 4000;
     let start = Instant::now();
 
     let client_wrapper = Arc::new(ClientWrapper::new(1000));
 
     let mut handles = Vec::new();
-    for i in 0..1000 {
+    for i in 0..n {
         let url = format!("https://127.0.0.1:3000/{}", i);
         let handle = tokio::spawn({
             let client_wrapper = client_wrapper.clone();

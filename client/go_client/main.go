@@ -74,15 +74,16 @@ func (cw *ClientWrapper) Get(url string) error {
 }
 
 func main() {
+	n := 4000
 	startTime := time.Now()
 
 	clientWrapper := NewClientWrapper(1000)
 
 	// Create slice to hold all the channels for results
-	results := make([]chan error, 1000)
+	results := make([]chan error, n)
 
 	// Launch all requests
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < n; i++ {
 		results[i] = make(chan error, 1)
 		url := fmt.Sprintf("https://127.0.0.1:3000/%d", i)
 
@@ -92,7 +93,7 @@ func main() {
 	}
 
 	// Wait for all results
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < n; i++ {
 		if err := <-results[i]; err != nil {
 			log.Printf("Error: %v", err)
 		}
